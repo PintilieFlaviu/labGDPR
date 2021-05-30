@@ -66,29 +66,3 @@ Exemplul 5:
 
 
 Browser:  
-Time zone:
-
-jQuery(function() {
-  $.cookie('tz', (new Date()).getTimezoneOffset());
-});
-
-lass ApplicationController < ActionController::Base
-  before_filter :set_timezone
-  
-  # …
-private
-
-  def set_timezone
-    if current_user && browser_timezone && browser_timezone.name != current_user.time_zone
-      current_user.update_attributes :time_zone => browser_timezone.name
-    end
-    Time.zone = current_user ? current_user.time_zone : browser_timezone
-  end
-  
-  def browser_timezone
-    @browser_timezone ||= begin
-      ActiveSupport::TimeZone[-cookies[:tz].to_i.minutes]
-    end if cookies[:tz].present?
-  end
-
-end
